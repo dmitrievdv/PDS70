@@ -140,8 +140,6 @@ annotation!(ax_Hb, pruned_wl_Hb[1:50], fill(0.3, length(pruned_linelist_Hb[1:50]
 
 axislegend(ax_Ha)
 
-fig
-
 v_z_borders = [-6e7, 6e7]
 λ_borders = 6562.81*(1 .+ v_z_borders/3e10)
 
@@ -150,10 +148,12 @@ Ha_prof_vzs = 3e5*((Ha_prof_λs .- 6562.81)/6562.81)
 
 Ha_prof_rs = Ha_phot_corr_prof[λ_borders[1] .< dfs_Ha[1].WAVE .< λ_borders[2]]
 
-lines(Ha_prof_vzs, Ha_prof_rs)
+# lines(Ha_prof_vzs, Ha_prof_rs)
 
-open("pds70obs-$obs_dir-korg.dat", "w") do io
+open("pds70obs-$obs_dir-nolines.dat", "w") do io
     for (v_z, r) in zip(Ha_prof_vzs, Ha_prof_rs)
         println(io, "$v_z $r")
     end
 end
+
+fig

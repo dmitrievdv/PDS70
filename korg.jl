@@ -4,8 +4,10 @@ using DataFrames
 using FITSIO
 
 linelist = Korg.read_linelist("gfallvac08oct17.dat", format = "kurucz_vac")
+indices = findall(l -> Korg.air_to_vacuum(6556.5) < l.wl*1e8 < Korg.air_to_vacuum(6561.5), linelist)
+deleteat!(linelist, indices)
 
-linelist[1051558] = Korg.Line(6.571028e-5, -0.45, Korg.Species("Fe I"), 4.733140788520537)
+# linelist[1051558] = Korg.Line(6.571028e-5, -0.45, Korg.Species("Fe I"), 4.733140788520537)
 
 A_X = format_A_X(0.0, Dict("Fe" => 0.1, "Ti" => -0.2, "Ca" => -0.1, "Al" => -2, "Co" => -2, "Cr" => -2))
 atm = Korg.interpolate_marcs(4040, 4.44, A_X)
